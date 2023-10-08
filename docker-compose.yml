@@ -1,0 +1,18 @@
+version: '3'
+services:
+  node-app: 
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    depends_on: #le decimos que la app de node depende de postgres
+      - 'postgres'
+  postgres:
+    image: postgres:13 #version de postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: carlos123
+      POSTGRES_DB: prueba
+    ports:
+      - 5432:5432
