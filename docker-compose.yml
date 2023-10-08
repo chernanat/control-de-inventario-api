@@ -16,3 +16,10 @@ services:
       POSTGRES_DB: prueba
     ports:
       - 5432:5432
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: chernan1234@hotmail.com
+      PGADMIN_DEFAULT_PASSWORD: carlos123
+    ports:
+      - "8080:80"
