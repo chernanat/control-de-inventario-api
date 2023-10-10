@@ -10,7 +10,7 @@ services:
       - 'postgres'
   postgres:
     image: postgres:13 #version de postgres
-    environment:
+    environment: #variables de entorno de postgres
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: carlos123
       POSTGRES_DB: prueba
