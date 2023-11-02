@@ -5,8 +5,12 @@ const errorValidator = (req, res, next) => {
     validationResult(req).throw();
     return next();
   } catch (error) {
-    console.log(error);
-    res.status(400).json({
+    console.log(error.array());
+    const errores = error.array();
+    errores.forEach((error) => {
+      console.log(error.msg);
+    });
+    return res.status(400).json({
       errors: error.array(),
     });
   }

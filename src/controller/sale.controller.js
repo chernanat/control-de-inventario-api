@@ -5,6 +5,17 @@ const Sale = require("../models/Sale");
 const createSale = async (req, res) => {
   try {
     const { producto_id, cliente_id } = req.body;
+    const client_exists = await Client.findOne({
+      where: (id = cliente_id),
+    });
+    const product_exists = await Product.findOne({
+      where: (id = producto_id),
+    });
+    if (!client_exists || !product_exists) {
+      return res
+        .status(404)
+        .json(["Debe Existir Un Cliente y un Producto para crear la venta!"]);
+    }
     const newSale = await Sale.create({
       producto_id,
       cliente_id,
@@ -153,5 +164,5 @@ module.exports = {
   updateSale,
   deleteSale,
   getClientSales,
-  getProductSales
+  getProductSales,
 };

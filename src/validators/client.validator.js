@@ -2,8 +2,8 @@ const { check } = require("express-validator");
 const { errorValidator } = require("../middlewares/errorsvalidator");
 
 const requestValidate = [
-  check("nombre").exists().not().isEmpty(),
-  check("apellido").exists().not().isEmpty(),
+  check("nombre", "El campo nombre no debe estar vacio!").exists().not().isEmpty(),
+  check("apellido", "El campo apellido no debe estar vacio!").exists().not().isEmpty(),
   (req, res, next) => {
     errorValidator(req,res,next)
   }
