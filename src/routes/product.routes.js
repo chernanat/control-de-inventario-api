@@ -8,7 +8,7 @@ const {
 } = require("../controller/product.controller");
 
 //validators - request
-const { requestValidate } = require("../validators/product.validator");
+const { requestValidate, updateValidate } = require("../validators/product.validator");
 
 const router = Router();
 
@@ -18,7 +18,7 @@ router.post("/createproduct", requestValidate, createProduct);
 
 router.get("/getproducts", getProducts);
 
-router.put("/updateproduct/:id", updateProduct);
+router.put("/updateproduct/:id",updateValidate, updateProduct);
 
 router.delete("/deleteproduct/:id", deleteProduct);
 

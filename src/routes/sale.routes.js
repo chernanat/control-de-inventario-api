@@ -10,7 +10,7 @@ const {
 } = require("../controller/sale.controller");
 
 //validador
-const { requestValidate } = require("../validators/sale.validator");
+const { requestValidate, updateValidate } = require("../validators/sale.validator");
 
 const router = Router();
 
@@ -20,7 +20,7 @@ router.post("/createsale", requestValidate, createSale);
 
 router.get("/getsales", getSales);
 
-router.put("/updatesale/:id", updateSale);
+router.put("/updatesale/:id",updateValidate, updateSale);
 
 router.delete("/deletesale/:id", deleteSale);
 
