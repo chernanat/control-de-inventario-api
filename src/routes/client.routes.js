@@ -8,7 +8,10 @@ const {
 } = require("../controller/client.controller");
 
 //validador
-const { requestValidate, updateValidate } = require("../validators/client.validator");
+const {
+  requestValidate,
+  updateValidate,
+} = require("../validators/client.validator");
 
 const router = Router();
 
@@ -18,7 +21,7 @@ router.post("/createclient", requestValidate, createClient);
 
 router.get("/getclients", getClients);
 
-router.put("/updateclient/:id",updateValidate, updateClient);
+router.put("/updateclient/:id", updateValidate, updateClient);
 
 router.delete("/deleteclient/:id", deleteClient);
 

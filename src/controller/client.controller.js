@@ -1,5 +1,4 @@
 const Client = require("../models/Client");
-const Sale = require("../models/Sale");
 
 const createClient = async (req, res) => {
   try {

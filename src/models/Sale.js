@@ -7,7 +7,11 @@ const Sale = sequelize.define("sale", {
   id: {
     primaryKey: true,
     type: INTEGER,
-    autoIncrement: true
+    autoIncrement: true,
+  },
+  cantidad: {
+    type: INTEGER,
+    allowNull: true,
   },
   producto_id: {
     type: INTEGER,
@@ -15,7 +19,8 @@ const Sale = sequelize.define("sale", {
   },
   cliente_id: {
     type: INTEGER,
-    allowNull: false,
+    allowNull: true,
+    defaultValue: null,
   },
 });
 
@@ -30,13 +35,13 @@ Sale.belongsTo(Product, {
 });
 
 Product.hasMany(Sale, {
-  foreignKey: 'producto_id',
-  sourceKey: 'id'
+  foreignKey: "producto_id",
+  sourceKey: "id",
 });
 
 Client.hasMany(Sale, {
-  foreignKey: 'cliente_id',
-  sourceKey: 'id'
+  foreignKey: "cliente_id",
+  sourceKey: "id",
 });
 
 module.exports = Sale;
