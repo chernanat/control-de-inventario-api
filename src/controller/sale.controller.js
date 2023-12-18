@@ -2,6 +2,8 @@ const Client = require("../models/Client");
 const Product = require("../models/Product");
 const Sale = require("../models/Sale");
 
+const sequelize = require("sequelize");
+
 const createSale = async (req, res) => {
   try {
     const { producto_id, cliente_id, cantidad } = req.body;
@@ -132,8 +134,26 @@ const getSale = async (req, res) => {
 
 const getSales = async (req, res) => {
   try {
-    const ventas = await Sale.findAll();
-    return res.status(200).json(ventas);
+    const ventas = await Sale.findAll({
+      attributes: [
+        [
+          sequelize.fn('date_trunc', 'day', sequelize.cast(sequelize.col('createdAt'), 'timestamp')),
+          'createdAt'
+        ],
+        [sequelize.fn('SUM', sequelize.cast(sequelize.col('cantidad'), 'integer')), 'cantidad'],
+      ],
+      group: [sequelize.fn('date_trunc', 'day', sequelize.cast(sequelize.col('createdAt'), 'timestamp'))],
+      order: [sequelize.fn('date_trunc', 'day', sequelize.cast(sequelize.col('createdAt'), 'timestamp'))],
+      
+    });
+
+    // Formatear fechas y convertir a timestamp sin zona horaria
+    const ventasFormateadas = ventas.map((venta) => ({
+      createdAt: (venta.createdAt),
+      cantidad: parseInt(venta.cantidad),
+    }));
+
+    return res.status(200).json(ventasFormateadas);
   } catch (error) {
     console.log(error);
     return res.status(500).json({
@@ -142,6 +162,7 @@ const getSales = async (req, res) => {
     });
   }
 };
+
 
 const updateSale = async (req, res) => {
   try {

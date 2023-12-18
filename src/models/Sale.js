@@ -24,6 +24,16 @@ const Sale = sequelize.define("sale", {
   },
 });
 
+Sale.beforeCreate((sale) => {
+  // Manipular la fecha antes de crear el registro
+  sale.createdAt = new Date().toLocaleString();
+});
+
+Sale.beforeUpdate((sale) => {
+  // Manipular la fecha antes de actualizar el registro
+  sale.createdAt = new Date().toLocaleString();
+});
+
 Sale.belongsTo(Client, {
   foreignKey: "cliente_id",
   as: "cliente",
