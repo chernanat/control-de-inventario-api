@@ -2,17 +2,22 @@ const Product = require("../models/Product");
 
 const createProduct = async (req, res) => {
   try {
+    console.log(req.file);
     const { id, nombre, precio, cantidad } = req.body;
     const duplicatedProduct = await Product.findByPk(id);
     if (duplicatedProduct) {
       const errors = [{ msg: "Codigo existente!" }];
       return res.status(400).json({ errors });
     }
+
+    const imageBuffer = req.file.buffer;
+
     const newProduct = await Product.create({
       id,
       nombre,
       precio,
       cantidad,
+      imagen: imageBuffer
     });
     console.log(newProduct);
     res.status(200).json({
@@ -50,7 +55,7 @@ const getProduct = async (req, res) => {
 const getProducts = async (req, res) => {
   try {
     const productos = await Product.findAll({
-      order: ['createdAt']
+      order: ["createdAt"],
     });
     return res.status(200).json(productos);
   } catch (error) {
@@ -123,7 +128,7 @@ const incrementProduct = async (req, res) => {
         message: `Producto no encontrado!`,
         code: 404,
       });
-    await product.increment('cantidad');
+    await product.increment("cantidad");
     return res.status(200).json({
       message: `Producto Actualizado Exitosamente!`,
       code: 200,
@@ -146,7 +151,7 @@ const decrementProduct = async (req, res) => {
         message: `Producto no encontrado!`,
         code: 404,
       });
-    await product.decrement('cantidad');
+    await product.decrement("cantidad");
     return res.status(200).json({
       message: `Producto Actualizado Exitosamente!`,
       code: 200,

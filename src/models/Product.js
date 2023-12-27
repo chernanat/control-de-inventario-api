@@ -1,4 +1,4 @@
-const { INTEGER, STRING } = require("sequelize");
+const { INTEGER, STRING, BLOB } = require("sequelize");
 const sequelize = require("../db");
 
 const Product = sequelize.define("product", {
@@ -20,9 +20,12 @@ const Product = sequelize.define("product", {
     type: INTEGER,
     defaultValue: 0,
     allowNull: false,
-  }
+  },
+  imagen: {
+    type: BLOB,
+    allowNull: true,
+    defaultValue: "",
+  },
 });
 
 module.exports = Product;
-
-
