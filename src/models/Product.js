@@ -22,7 +22,7 @@ const Product = sequelize.define("product", {
     allowNull: false,
   },
   imagen: {
-    type: BLOB,
+    type: STRING,
     allowNull: true,
     defaultValue: "",
   },

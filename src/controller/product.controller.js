@@ -2,22 +2,22 @@ const Product = require("../models/Product");
 
 const createProduct = async (req, res) => {
   try {
-    console.log(req.file);
     const { id, nombre, precio, cantidad } = req.body;
+
     const duplicatedProduct = await Product.findByPk(id);
     if (duplicatedProduct) {
       const errors = [{ msg: "Codigo existente!" }];
       return res.status(400).json({ errors });
     }
 
-    const imageBuffer = req.file.buffer;
+    const image = req.file?.filename;
 
     const newProduct = await Product.create({
       id,
       nombre,
       precio,
       cantidad,
-      imagen: imageBuffer
+      imagen: image || "",
     });
     console.log(newProduct);
     res.status(200).json({
